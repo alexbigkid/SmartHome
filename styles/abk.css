@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+﻿/* ************************************************************************** */
 /* File: abk.css */
 /* ************************************************************************** */
 /* Es folgen die Style-Definitionen, die Du aendern kannst.                   */
@@ -197,10 +197,13 @@ table#bio td#norm a:hover   { color: #FAEBD7; text-decoration: underline; }
 
 table#contact          { border: 1px groove silver; position:center; margin:auto; }
 table#contact th       { background-color:#4F4F4F; text-shadow:black 3px 2px 4px; color:gold; font-size:1.5em; }
-table#contact td#bold  { font-style:oblique; color:#777777; }
+/* table#contact td#bold  { font-style:oblique; font-weight:bold; color:#777777; } */
+table#contact td#bold  { text-shadow:gray 2px 2px 4px; font-style:oblique; font-weight:bold; color:#444444; }
 table#contact td#blue  { text-shadow:black 3px 2px 4px; color:blue; }
-table#contact td#norm  { text-shadow:black 3px 2px 4px; color:#777777; }
-table#contact td#norm a:hover   { color: #FAEBD7; text-decoration: underline; }
+/* table#contact td#norm  { text-shadow:black 3px 2px 4px; color:#777777; } */
+table#contact td#norm  { text-shadow:gray 2px 2px 4px; color:#444444; }
+/* table#contact td#norm  { color:#444444; } */
+table#contact td#norm a:hover   { color:purple; text-decoration: underline; }
 
 table#rates           { border: 1px groove silver; border-collapse:collapse; position:center; margin:auto; }
 table#rates th        { border: 1px groove silver; background-color:#4F4F4F; text-shadow:black 3px 2px 4px; color:gold; font-size:1.5em; }
