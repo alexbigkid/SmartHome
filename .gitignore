@@ -1,1 +1,2 @@
-flywayDbConnection.conf
+dbMigration/flywayDbConnection.conf
+dbMigration/mysqlDbConnection.conf
