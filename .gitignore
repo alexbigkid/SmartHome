@@ -1,2 +1,3 @@
 dbMigration/flywayDbConnection.conf
 dbMigration/mysqlDbConnection.conf
+dbMigration/data/*.xlsx
