@@ -1,6 +1,5 @@
 dbMigration/flywayDbConnection.conf
 dbMigration/mysqlDbConnection.conf
 dbMigration/data/*.xlsx
-node_modules
 node_modules/*
 .vscode/*
