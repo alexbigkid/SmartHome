@@ -27,5 +27,5 @@ CREATE TABLE `FootballWorldCup` (
   CONSTRAINT `2ndPlacedCountryId` FOREIGN KEY (`2ndPlacedCountryId`) REFERENCES `Country` (`id`),
   CONSTRAINT `3rdPlacedCountryId` FOREIGN KEY (`3rdPlacedCountryId`) REFERENCES `Country` (`id`),
   CONSTRAINT `4thPlacedCountryId` FOREIGN KEY (`4thPlacedCountryId`) REFERENCES `Country` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
