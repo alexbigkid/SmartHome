@@ -2,6 +2,6 @@ dbMigration/flywayDbConnection.conf
 dbMigration/flywayDbConnectionLocal.conf
 dbMigration/mysqlDbConnection.conf
 dbMigration/mysqlDbConnectionLocal.conf
-dbMigration/data/*.xlsx
+dbMigration/sqlData/*.xlsx
 node_modules/*
 .vscode/*
