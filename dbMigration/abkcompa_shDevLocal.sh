@@ -1,7 +1,7 @@
 #!/bin/bash
 
-HOST=ABKweb
-LCL_SSH_PORT=13306
+# HOST=ABKweb
+# LCL_SSH_PORT=13306
 
 # exit error codes
 ERROR_CODE_SUCCESS=0
@@ -12,30 +12,36 @@ ERROR_CODE_NOT_VALID_PARAMETER=4
 ERROR_CODE=$ERROR_CODE_SUCCESS
 
 
-echo "starting ssh on $LCL_SSH_PORT:127.0.0.1:3306 $HOST"
-ssh -f -N -T -M -L $LCL_SSH_PORT:127.0.0.1:3306 $HOST
-echo "ssh connection opened with $?"
-ERROR_CODE=$?
+# echo "starting ssh on $LCL_SSH_PORT:127.0.0.1:3306 $HOST"
+# ssh -f -N -T -M -L $LCL_SSH_PORT:127.0.0.1:3306 $HOST
+# echo "ssh connection opened with $?"
+# ERROR_CODE=$?
 
+echo ""
 if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
+    echo "+----------------------------------------+"
+    echo "| MySQL check                            |"
+    echo "+----------------------------------------+"
+    mysql --defaults-file=mysqlDbConnectionLocal.conf abkcompa_shDev -e 'DROP TABLE `Employees`;'
+
     echo "+----------------------------------------+"
     echo "| Flyway schema version before migration |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf info
     echo "+----------------------------------------+"
     echo "| Flyway schema migration                |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf migrate
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf migrate
     ERROR_CODE=$?
     echo "+----------------------------------------+"
     echo "| Flyway schema version after migration  |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf info
 fi
 
-echo "closing ssh connection ..."
-ssh -T -O "exit" $HOST
-echo "ssh connection closed with $?"
+# echo "closing ssh connection ..."
+# ssh -T -O "exit" $HOST
+# echo "ssh connection closed with $?"
 
 if [ "$ERROR_CODE" -ne $ERROR_CODE_SUCCESS ]; then
     echo "\$ERROR_CODE = $ERROR_CODE"

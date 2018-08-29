@@ -21,20 +21,20 @@ if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
     echo "+----------------------------------------+"
     echo "| Flyway Schema Version Information      |"
     echo "+----------------------------------------+"
-    /usr/local/bin/flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf info
 
     echo "+----------------------------------------+"
     echo "| MySQL Tables                           |"
     echo "+----------------------------------------+"
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Employees`;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Company`;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `FootballWorldCup`;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `State`;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Country`;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
-    #/usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Employees`; DROP TABLE `Company`; DROP TABLE `FootballWorldCup`; DROP TABLE `State`; DROP TABLE `Country`; DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
-    #/usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
-    /usr/local/bin/mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'SHOW TABLES;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Employees`;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Company`;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `FootballWorldCup`;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `State`;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Country`;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
+    #mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Employees`; DROP TABLE `Company`; DROP TABLE `FootballWorldCup`; DROP TABLE `State`; DROP TABLE `Country`; DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
+    #mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'SHOW TABLES;'
 fi
 
 echo "closing ssh connection ..."
