@@ -229,7 +229,7 @@ VALUES
 	(226,'Ukraine','380','UA','UKR','Kiev',45415596,603700,175500000000,'Hryvnia','UAH','₴',26.1111,'2018-05-31'),
 	(227,'United Arab Emirates','971','AE','ARE','Abu Dhabi',4975593,82880,390000000000,'UAE Dirham','AED','د.إ',3.6725,'2018-05-31'),
 	(228,'United Kingdom','44','GB','GBR','London',62348447,244820,2490000000000,'Pound Sterling','GBP','£',0.7524,'2018-05-31'),
-	(229,'United States','1','US','USA','Washinfton',310232863,9629091,16720000000000,'US Dollar','USD','$',1.0000,'2018-05-31'),
+	(229,'United States','1','US','USA','Washington',310232863,9629091,16720000000000,'US Dollar','USD','$',1.0000,'2018-05-31'),
 	(230,'Uruguay','598','UY','URY','Montevideo',3477000,176220,57110000000,'Peso Uruguayo','UYU','$',31.1174,'2018-05-31'),
 	(231,'Uzbekistan','998','UZ','UZB','Tashkent',27865738,447400,55180000000,'Uzbekistan Sum','UZS','so\'m',7986.5400,'2018-05-31'),
 	(232,'Vanuatu','678','VU','VUT','Port Vila',221552,12200,828000000,'Vanuatu Vatu','VUV','Vt',110.3640,'2018-05-31'),
@@ -247,7 +247,7 @@ VALUES
 
 
 LOCK TABLES `State` WRITE;
-INSERT INTO `State` (`id`, `StateName`, `SateAbbreviation`, `Capital`, `Population`, `AreaInKm2`, `GDPinUSD`, `CountryId`)
+INSERT INTO `State` (`id`, `StateName`, `StateAbbreviation`, `Capital`, `Population`, `AreaInKm2`, `GDPinUSD`, `CountryId`)
 VALUES
 	(1,'Alabama','AL','Montgomery',4888949,131171,2056250000000,229),
 	(2,'Alaska','AK','Juneau',738068,1477953,504040000000,229),
