@@ -3,6 +3,9 @@
 # HOST=ABKweb
 # LCL_SSH_PORT=13306
 
+LCL_MYSQL_DIR="/usr/local/var/mysql"
+LCL_DB_NAME="abkcompa_shDev"
+
 # exit error codes
 ERROR_CODE_SUCCESS=0
 ERROR_CODE_GENERAL_ERROR=1
@@ -18,25 +21,33 @@ ERROR_CODE=$ERROR_CODE_SUCCESS
 # ERROR_CODE=$?
 
 echo ""
-if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
+
+if [ ! -d $LCL_MYSQL_DIR/$LCL_DB_NAME ]; then
+    mysql --defaults-file=mysqlDbConnectionLocal.conf -e "CREATE DATABASE $LCL_DB_NAME CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    ERROR_CODE=$?
+fi
+
+
+
+if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ] && [ -d $LCL_MYSQL_DIR/$LCL_DB_NAME ]; then
     echo "+----------------------------------------+"
     echo "| MySQL check                            |"
     echo "+----------------------------------------+"
-    mysql --defaults-file=mysqlDbConnectionLocal.conf abkcompa_shDev -e 'DROP TABLE `Employees`;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'show tables;'
 
     echo "+----------------------------------------+"
     echo "| Flyway schema version before migration |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=$LCL_DB_NAME.conf info
     echo "+----------------------------------------+"
     echo "| Flyway schema migration                |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf migrate
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=$LCL_DB_NAME.conf migrate
     ERROR_CODE=$?
     echo "+----------------------------------------+"
     echo "| Flyway schema version after migration  |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=$LCL_DB_NAME.conf info
 fi
 
 # echo "closing ssh connection ..."

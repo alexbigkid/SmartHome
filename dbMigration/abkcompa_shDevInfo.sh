@@ -27,7 +27,7 @@ if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
     echo "| MySQL Tables                           |"
     echo "+----------------------------------------+"
     mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'show tables;'
-    #mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
 fi
 
 echo "closing ssh connection ..."

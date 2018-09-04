@@ -3,6 +3,9 @@
 # HOST=ABKweb
 # LCL_SSH_PORT=13306
 
+LCL_MYSQL_DIR="/usr/local/var/mysql"
+LCL_DB_NAME="abkcompa_shDev"
+
 # exit error codes
 ERROR_CODE_SUCCESS=0
 ERROR_CODE_GENERAL_ERROR=1
@@ -17,17 +20,22 @@ ERROR_CODE=$ERROR_CODE_SUCCESS
 # echo "ssh connection opened with $?"
 # ERROR_CODE=$?
 
-if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
+echo "+----------------------------------------+"
+echo "| MySQL show all databases               |"
+echo "+----------------------------------------+"
+mysql --defaults-file=mysqlDbConnectionLocal.conf -e 'show databases;'
+
+if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ] && [ -d $LCL_MYSQL_DIR/$LCL_DB_NAME ]; then
     echo "+----------------------------------------+"
     echo "| Flyway Schema Version Information      |"
     echo "+----------------------------------------+"
-    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=abkcompa_shDev.conf info
+    flyway -configFiles=flywayDbConnectionLocal.conf -configFiles=$LCL_DB_NAME.conf info
 
     echo "+----------------------------------------+"
     echo "| MySQL Tables                           |"
     echo "+----------------------------------------+"
-    mysql --defaults-file=mysqlDbConnectionLocal.conf abkcompa_shDev -e 'show tables;'
-    #mysql --defaults-file=mysqlDbConnectionLocal.conf abkcompa_shDev -e 'describe flyway_schema_history;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'show tables;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'describe flyway_schema_history;'
 fi
 
 # echo "closing ssh connection ..."
