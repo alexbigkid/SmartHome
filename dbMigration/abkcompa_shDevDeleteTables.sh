@@ -33,7 +33,7 @@ if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
     mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Country`;'
     mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
     #mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'DROP TABLE `Employees`; DROP TABLE `Company`; DROP TABLE `FootballWorldCup`; DROP TABLE `State`; DROP TABLE `Country`; DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
-    #mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
+    mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'describe flyway_schema_history;'
     mysql --defaults-file=mysqlDbConnection.conf abkcompa_shDev -e 'SHOW TABLES;'
 fi
 

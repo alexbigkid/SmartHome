@@ -19,6 +19,11 @@ ERROR_CODE=$?
 
 if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ]; then
     echo "+----------------------------------------+"
+    echo "| MySQL check                            |"
+    echo "+----------------------------------------+"
+    mysql --defaults-file=mysqlDbConnection.conf $LCL_DB_NAME -e 'show tables;'
+
+    echo "+----------------------------------------+"
     echo "| Flyway schema version before migration |"
     echo "+----------------------------------------+"
     flyway -configFiles=flywayDbConnection.conf -configFiles=abkcompa_shDev.conf info

@@ -29,16 +29,19 @@ if [ "$ERROR_CODE" -eq $ERROR_CODE_SUCCESS ] && [ -d $LCL_MYSQL_DIR/$LCL_DB_NAME
     echo "+----------------------------------------+"
     echo "| MySQL Tables                           |"
     echo "+----------------------------------------+"
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE `Company`;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE `Employees`;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE `FootballWorldCup`;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE `State`;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE `Country`;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
-    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'describe flyway_schema_history;'
+    # mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'SET FOREIGN_KEY_CHECKS = 0;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS Employees;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS Company;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS FootballWorldCup;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS State;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS Country;'
+    mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DROP TABLE IF EXISTS flyway_schema_history;'
+    # mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'SET FOREIGN_KEY_CHECKS = 1;'
+    # mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'DELETE FROM `flyway_schema_history` WHERE `installed_rank` <> 1;'
+    # mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'describe flyway_schema_history;'
     mysql --defaults-file=mysqlDbConnectionLocal.conf $LCL_DB_NAME -e 'SHOW TABLES;'
 
-    mysql --defaults-file=mysqlDbConnectionLocal.conf -e "DROP DATABASE $LCL_DB_NAME;"
+    mysql --defaults-file=mysqlDbConnectionLocal.conf -e "DROP DATABASE IF EXISTS $LCL_DB_NAME;"
     ERROR_CODE=$?
 fi
 
