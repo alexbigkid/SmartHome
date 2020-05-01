@@ -21,6 +21,7 @@ jobs:
               run: |
                 echo "\$HOME = $HOME"
                 echo "\$SHELL = $SHELL"
-                bash --version
                 which bash
+                bash --version
                 which rsync
+                rsync --version
