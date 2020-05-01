@@ -18,31 +18,26 @@ jobs:
             - name: List directory
               run: ls -la
 
-            - name: Set ENVIRONMENT to dev
-              if: endsWith(github.ref, '/dev')
-              run: echo "::set-env name=ENVIRONMENT::dev"
-            - name: Set ENVIRONMENT to test
-              if: endsWith(github.ref, '/test')
-              run: echo "::set-env name=ENVIRONMENT::test"
-            - name: Set ENVIRONMENT to prod
-              if: endsWith(github.ref, '/master')
-              run: echo "::set-env name=ENVIRONMENT::prod"
+            - name: dev branch?
+              if:   endsWith(github.ref, '/dev')
+              run:  echo "::set-env name=ENVIRONMENT::dev"
+            - name: test branch?
+              if:   endsWith(github.ref, '/test')
+              run:  echo "::set-env name=ENVIRONMENT::test"
+            - name: master branch aka prod?
+              if:   endsWith(github.ref, '/master')
+              run:  echo "::set-env name=ENVIRONMENT::prod"
 
-            - name: Print out ENVIRONMENT variable
-              run: echo "\$ENVIRONMENT = $ENVIRONMENT"
-
-            - run:   echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')
-              shell: bash
-
-            - run:   echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
+            - name:  Set REPOSITORY_NAME
+              run:   echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')
               shell: bash
 
             - name: "Sync to hosting website: "
+              env:
+                ABK_DOMAIN: abkcompany.com
+                ABK_SUB_DOMAIN: $GITHUB_REPOSITORY-$ENVIRONMENT
               run: |
-                echo "\$HOME = $HOME"
-                echo "\$SHELL = $SHELL"
-                which bash
-                bash --version
-                which rsync
-                rsync --version
-                echo "\$GITHUB_REF = $GITHUB_REF"
+                echo "\$ENVIRONMENT     = $ENVIRONMENT"
+                echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
+                echo "\$ABK_DOMAIN      = $ABK_DOMAIN"
+                echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
