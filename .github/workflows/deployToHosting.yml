@@ -24,6 +24,8 @@ jobs:
                 bash --version
                 which terraform
                 terraform --version
+                which serverless
+                serverless --version
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
