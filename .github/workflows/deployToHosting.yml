@@ -22,9 +22,8 @@ jobs:
             - name: Check setup
               run: |
                 ls -la
-                ls -la /usr/local/bin
-                which bash
                 echo "\$SHELL = $SHELL"
+                which bash
                 bash --version
 
             - name: dev branch?
