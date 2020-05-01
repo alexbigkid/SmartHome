@@ -1,20 +1,26 @@
 name: dev SmartHome web CI
 
 on:
-  push:
-    branches: [ master ]
+    push:
+        branches: [ master ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+        steps:
+            - uses: actions/checkout@v2
 
-      - name: Who am I
-        run: whoami
+            - name: Who am I
+              run: whoami
 
-      - name: Home, Shell
-        run: |
-          echo "\$HOME = $HOME"
-          echo "\$SHELL = $SHELL"
+            - name: List directory
+              run: ls -la
+
+            - name: Home, Shell
+              run: |
+                echo "\$HOME = $HOME"
+                echo "\$SHELL = $SHELL"
+                bash --version
+                which bash
+                which rsync
