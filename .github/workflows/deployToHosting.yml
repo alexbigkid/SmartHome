@@ -52,7 +52,7 @@ jobs:
                 echo "\$ABK_DOMAIN      = $ABK_DOMAIN"
                 echo "\$ABK_SUB_DOMAIN  = $REPOSITORY_NAME-$ENVIRONMENT"
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
-                echo "FULL_DOMAIN_NAME = ${ABK_SUB_DOMAIN,,}.$ABK_DOMAIN"
+                echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
             - name: "Sync to hosting website: "
               run:  echo "test 1"
