@@ -2,22 +2,38 @@ name: dev SmartHome web CI
 
 on:
     push:
-        branches: [ master ]
+        branches:
+            - dev
+            - test
+            - master
+
 
 jobs:
-    build:
+    Deploy:
         runs-on: ubuntu-latest
 
         steps:
             - uses: actions/checkout@v2
 
-            - name: Who am I
-              run: whoami
-
             - name: List directory
               run: ls -la
 
-            - name: Home, Shell
+            - name: Set ENVIRONMENT to dev
+              if: endsWith(github.ref, '/dev')
+              run: echo "::set-env name=ENVIRONMENT::dev"
+
+            - name: Set ENVIRONMENT to test
+              if: endsWith(github.ref, '/test')
+              run: echo "::set-env name=ENVIRONMENT::test"
+
+            - name: Set ENVIRONMENT to prod
+              if: endsWith(github.ref, '/master')
+              run: echo "::set-env name=ENVIRONMENT::prod"
+
+            - name: Print out ENVIRONMENT variable
+              run: echo "\$ENVIRONMENT =  $ENVIRONMENT"
+
+            - name: "Sync to hosting website: $GITHUB_REF_NAME"
               run: |
                 echo "\$HOME = $HOME"
                 echo "\$SHELL = $SHELL"
@@ -25,3 +41,4 @@ jobs:
                 bash --version
                 which rsync
                 rsync --version
+                echo $GITHUB_REF_NAME = $GITHUB_REF_NAME"
