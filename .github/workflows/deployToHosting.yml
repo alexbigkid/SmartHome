@@ -21,6 +21,8 @@ jobs:
                 which bash
                 echo "\$SHELL = $SHELL"
                 bash --version
+                which terraform
+                terraform --version
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
