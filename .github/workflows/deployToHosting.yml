@@ -33,7 +33,7 @@ jobs:
                 ABK_DOMAIN: abkcompany.com
               run: |
                 echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')
-                echo ::set-env name=ABK_SUB_DOMAIN::$([[ $ENVIRONMENT -nq "prod" ]] && echo "$REPOSITORY_NAME-$ENVIRONMENT." || echo "")
+                echo ::set-env name=ABK_SUB_DOMAIN::$([[ $ENVIRONMENT -ne "prod" ]] && echo "$REPOSITORY_NAME-$ENVIRONMENT." || echo "")
 
             - name: "Sync to hosting website: "
               run: |
