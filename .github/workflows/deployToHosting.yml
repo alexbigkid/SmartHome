@@ -28,15 +28,18 @@ jobs:
               if:   endsWith(github.ref, '/master')
               run:  echo "::set-env name=ENVIRONMENT::prod"
 
-            - name:  Set REPOSITORY_NAME
-              run:   echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')
-            #   shell: bash
-
-            - name: "Sync to hosting website: "
+            - name:  Set variable names
               env:
                 ABK_DOMAIN: abkcompany.com
+              run: |
+                echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}')
+                echo ::set-env name=ABK_SUB_DOMAIN::$([[ $ENVIRONMENT -nq "prod" ]] && echo "$REPOSITORY_NAME-$ENVIRONMENT." || echo "")
+
+            - name: "Sync to hosting website: "
               run: |
                 echo "\$ENVIRONMENT     = $ENVIRONMENT"
                 echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
                 echo "\$ABK_DOMAIN      = $ABK_DOMAIN"
-                echo "\$ABK_SUB_DOMAIN  = $GITHUB_REPOSITORY-$ENVIRONMENT"
+                echo "\$ABK_SUB_DOMAIN  = $REPOSITORY_NAME-$ENVIRONMENT"
+                echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
+                echo "FULL_DOMAIN_NAME  = ABK_SUB_DOMAIN$ABK_DOMAIN"
