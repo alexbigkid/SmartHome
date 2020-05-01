@@ -41,4 +41,4 @@ jobs:
                 bash --version
                 which rsync
                 rsync --version
-                echo $GITHUB_REF_NAME = $GITHUB_REF_NAME"
+                echo "\$GITHUB_REF_NAME = $GITHUB_REF_NAME"
