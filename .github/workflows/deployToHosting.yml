@@ -35,7 +35,7 @@ jobs:
             - name: "Sync to hosting website: "
               env:
                 ABK_DOMAIN: abkcompany.com
-                ABK_SUB_DOMAIN: $GITHUB_REPOSITORY-$ENVIRONMENT
+                ABK_SUB_DOMAIN: "$GITHUB_REPOSITORY-$ENVIRONMENT"
               run: |
                 echo "\$ENVIRONMENT     = $ENVIRONMENT"
                 echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
