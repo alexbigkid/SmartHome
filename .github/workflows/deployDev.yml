@@ -11,10 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Who am I
+        run: whoami
 
-      - name: Run a multi-line script
+      - name: Home, Shell
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo "\$HOME = $HOME"
+          echo "\$SHELL = $SHELL"
