@@ -7,24 +7,23 @@ on:
             - test
             - master
 
+env:
+    ABK_DOMAIN: abkcompany.com
 
 jobs:
     Deploy:
-        runs-on: ubuntu-latest
-        # runs-on: ${{ matrix.os }}
-        # strategy:
-        #     matrix:
-        #         os: [ ubuntu-latest, macOS-latest ]
+        name: Runs on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ ubuntu-latest ]
+                # os: [ ubuntu-latest, macOS-latest ]
 
         steps:
             - uses: actions/checkout@master
 
-            - name: Check setup
-              run: |
-                ls -la
-                echo "\$SHELL = $SHELL"
-                which bash
-                bash --version
+            - name: Check the checkout
+              run: pwd && ls -la
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
@@ -43,8 +42,6 @@ jobs:
               run:  echo ::set-env name=ABK_SUB_DOMAIN::$([ "$ENVIRONMENT" != "prod" ] && echo "$REPOSITORY_NAME-$ENVIRONMENT" || echo "$REPOSITORY_NAME")
 
             - name: "Print setup variables: "
-              env:
-                ABK_DOMAIN: abkcompany.com
               run: |
                 echo "\$ENVIRONMENT     = $ENVIRONMENT"
                 echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
