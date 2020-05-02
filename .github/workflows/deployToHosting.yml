@@ -12,7 +12,7 @@ env:
 
 jobs:
     Deploy:
-        name: Runs on ${{ matrix.os }}
+        name: Deploy ran on ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
@@ -50,5 +50,8 @@ jobs:
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
                 echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
-            - name: "Sync to hosting website: "
-              run:  echo "test 1"
+            - name: "Backup website: $ABK_SUB_DOMAIN.$ABK_DOMAIN"
+              run:  echo "backing up"
+
+            - name: "Sync to hosting website: $ABK_SUB_DOMAIN.$ABK_DOMAIN" 
+              run:  echo "syncing"
