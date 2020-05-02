@@ -50,7 +50,7 @@ jobs:
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
                 echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
-            - name: "Backup website: $ABK_SUB_DOMAIN.$ABK_DOMAIN"
+            - name: "Backup website: ${{ env.ABK_SUB_DOMAIN }}.${{ env.ABK_DOMAIN }}"
               run:  echo "backing up"
 
             - name: "Sync to hosting website: $ABK_SUB_DOMAIN.$ABK_DOMAIN"
