@@ -27,26 +27,26 @@ jobs:
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
-              run:  echo "::set-env name=ENVIRONMENT::dev"
+              run:  echo "::set-env name=ABK_ENV::dev"
             - name: test branch?
               if:   endsWith(github.ref, '/test')
-              run:  echo "::set-env name=ENVIRONMENT::test"
+              run:  echo "::set-env name=ABK_ENV::test"
             - name: master branch aka prod?
               if:   endsWith(github.ref, '/master')
-              run:  echo "::set-env name=ENVIRONMENT::prod"
+              run:  echo "::set-env name=ABK_ENV::prod"
 
-            - name: Set REPOSITORY_NAME
-              run:  echo ::set-env name=REPOSITORY_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | tr '[:upper:]' '[:lower:]')
+            - name: Set ABK_REPO_NAME
+              run:  echo ::set-env name=ABK_REPO_NAME::$(echo "$GITHUB_REPOSITORY" | awk -F / '{print $2}' | tr '[:upper:]' '[:lower:]')
 
             - name: Set ABK_SUB_DOMAIN
-              run:  echo ::set-env name=ABK_SUB_DOMAIN::$([ "$ENVIRONMENT" != "prod" ] && echo "$REPOSITORY_NAME-$ENVIRONMENT" || echo "$REPOSITORY_NAME")
+              run:  echo ::set-env name=ABK_SUB_DOMAIN::$([ "$ABK_ENV" != "prod" ] && echo "$ABK_REPO_NAME-$ABK_ENV" || echo "$ABK_REPO_NAME")
 
             - name: "Print setup variables: "
               run: |
-                echo "\$ENVIRONMENT     = $ENVIRONMENT"
-                echo "\$REPOSITORY_NAME = $REPOSITORY_NAME"
+                echo "\$ABK_ENV         = $ABK_ENV"
+                echo "\$ABK_REPO_NAME   = $ABK_REPO_NAME"
                 echo "\$ABK_DOMAIN      = $ABK_DOMAIN"
-                echo "\$ABK_SUB_DOMAIN  = $REPOSITORY_NAME-$ENVIRONMENT"
+                echo "\$ABK_SUB_DOMAIN  = $ABK_REPO_NAME-$ABK_ENV"
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
                 echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
