@@ -12,7 +12,7 @@ env:
 
 jobs:
     Deploy:
-        name: Deploy ran on ${{ matrix.os }}
+        name: Ran on ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         strategy:
             matrix:
@@ -22,8 +22,8 @@ jobs:
         steps:
             - uses: actions/checkout@master
 
-            - name: Check the checkout
-              run: pwd && ls -la
+            - name: Update time stamp and check the checkout
+              run: touch index.html && pwd && ls -la
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
@@ -50,8 +50,8 @@ jobs:
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
                 echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
-            - name: "Backup website: ${{ ABK_SUB_DOMAIN }}.${{ ABK_DOMAIN }}"
+            - name: "Backup website: $ABK_SUB_DOMAIN.$ABK_DOMAIN"
               run:  echo "backing up"
 
-            - name: "Sync to hosting website: ${{ ABK_SUB_DOMAIN }}.${{ ABK_DOMAIN }}"
+            - name: "Sync to hosting website: $ABK_SUB_DOMAIN.$ABK_DOMAIN"
               run:  echo "syncing"
