@@ -1,4 +1,4 @@
-name: Deploy SmartHome web CI
+name: Deploy website CI
 
 on:
     push:
@@ -20,10 +20,19 @@ jobs:
                 # os: [ ubuntu-latest, macOS-latest ]
 
         steps:
-            - uses: actions/checkout@master
+            - name: checking out the git repo
+              uses: actions/checkout@master
 
             - name: Update time stamp and check the checkout
               run: touch index.html && pwd && ls -la
+
+            - name: Link Checker
+              id: lc
+              uses: peter-evans/link-checker@v1
+              with:
+                args: -v -r *
+            - name: Fail if there were link errors
+              run: exit ${{ steps.lc.outputs.exit_code }}
 
             - name: dev branch?
               if:   endsWith(github.ref, '/dev')
@@ -50,8 +59,18 @@ jobs:
                 echo "\$ABK_SUB_DOMAIN  = $ABK_SUB_DOMAIN"
                 echo "FULL_DOMAIN_NAME = $ABK_SUB_DOMAIN.$ABK_DOMAIN"
 
-            - name: "Backup website: ${{ env.ABK_SUB_DOMAIN }}.${{ env.ABK_DOMAIN }}"
-              run:  echo "backing up"
-
             - name: "Rsync website: ${{ env.ABK_SUB_DOMAIN }}.${{ env.ABK_DOMAIN }}"
-              run:  echo "syncing"
+              uses: easingthemes/ssh-deploy@master
+              env:
+                REMOTE_RSYNC: ./bin/rsync
+                # GIT_FILES: .git*
+                # OSX_ATTRIB_FILE: .DS_Store
+                # EXCLUDE_DB_MIGRATION: dbMigration*
+                SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+                REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+                REMOTE_USER: ${{ secrets.REMOTE_USER }}
+                REMOTE_PORT: '17177'
+                # ARGS: "-avz --delete --rsync-path=$REMOTE_RSYNC --exclude={$GIT_FILES,$OSX_ATTRIB_FILE,$EXCLUDE_DB_MIGRATION}"
+                ARGS: "-avz --delete --exclude '.git*' --rsync-path=$REMOTE_RSYNC"
+                SOURCE: "./"
+                TARGET: ${{ secrets.REMOTE_TARGET }}/$ABK_SUB_DOMAIN.$ABK_DOMAIN/
